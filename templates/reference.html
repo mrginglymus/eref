@@ -4,37 +4,44 @@
 {% include 'progress.html' %}
 {% endblock %}
 
-{% from 'macros.html' import text_input, saveandnext, select_input %}
+{% from 'macros.html' import text_input, saveandnext, select_input, modal %}
 
 {% block content %}
+<form>
 <div class="p-a">
   <h2>Ranking</h2>
   <div class="row">
     <div class="col-md-6">
       <h3>Academic Ranking</h3>
       <p> Please give the applicant's official class ranking, if available, or an estimate of their position within the entire yeargroup</p>
-      <form class="form-inline">
+      <div class="form-inline">
         <div class="form-group">
-          <input type="number" class="form-control" placeholder="Position">
+          <input type="number" class="form-control" placeholder="Position" id="arposition" name="arposition">
         </div>
         <div class="form-group">
           <label>out of</label>
-          <input type="number" class="form-control" placeholder="Yeargroup size">
+          <input type="number" class="form-control" placeholder="Yeargroup size" id="arsize" name="arsize">
         </div>
-      </form>
+      </div>
       <div class="checkbox p-t">
         <label>
-          <input type="checkbox">
-          I am not able to provide an academic ranking
+          <input type="checkbox" name="arno">
+          I am not able to provide an academic ranking (please give details in the reference)
         </label>
       </div>
     </div>
     <div class="col-md-6">
       <h3>Personal Ranking</h3>
       <p>Please give your personal assessment of the applicant's suitability for the course</p>
-      {{ select_input(false, ranking, ['---Select Ranking---', 'Top 1% - Exceptional', 'Top 5% - Outstanding', 'Top 10% - Very Good', 'Top 25% - Good', 'Top 50% - Above Average', 'Bottom 50% - Below Average', 'I am unable to give a ranking (Please give details in the reference)']) }}
+      {{ select_input(false, ranking, ['---Select Ranking---', 'Top 1% - Exceptional', 'Top 5% - Outstanding', 'Top 10% - Very Good', 'Top 25% - Good', 'Top 50% - Above Average', 'Bottom 50% - Below Average']) }}
       <p>This ranking is based on:</p>
       {{ select_input(false, ranking_reason, ['---Select basis---', 'All students I have ever taught', 'Students on a particular course/in a particular class', 'Students in the year group', 'A team of people (e.g. staff or volunteers in an organisation)', 'A group not listed above (please give details in the reference)']) }}
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="perno">
+          I am not able to provide an academic ranking (please give details in the reference)
+        </label>
+      </div>
     </div>
   </div>
   <hr>
@@ -48,20 +55,19 @@
     <li>A justification of any difference between the applicants academic ranking and your personal ranking;</li>
     <li>Any other information which you think is relevant to the application (e.g., research experience, ability to work independently, key strengths /weaknesses)</li>
   </ul>
-
   {% if not method %}
   <h2 style="text-align:center;">Please select how you would like to provide your reference</h2>
   <div class="row">
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
       <div class="row">
         <div class="col-xs-6">
-          <a href="./?method=write" style="display:block; width: 150px; margin: 0 auto; text-align:center; white-space:normal;" class="btn btn-secondary">
+          <a href="./?method=write#reference" style="display:block; width: 150px; margin: 0 auto; text-align:center; white-space:normal;" class="btn btn-secondary">
             <span class="fa fa-pencil fa-4x"></span><br>
             Write online or copy from document
           </a>
         </div>
         <div class="col-xs-6">
-          <a href="./?method=upload" style="display:block; width: 150px; margin: 0 auto; text-align:center; white-space:normal;" class="btn btn-secondary">
+          <a href="./?method=upload#reference" style="display:block; width: 150px; margin: 0 auto; text-align:center; white-space:normal;" class="btn btn-secondary">
             <span class="fa fa-file-text-o fa-4x"></span><br>
             Select a document from your computer
           </a>
@@ -70,35 +76,40 @@
     </div>
   </div>
   {% elseif method=='write' %}
-  <div class="row">
+  <div class="row" id="reference">
     <div class="col-md-6">
       <h3>Write reference online or copy from document</h3>
     </div>
     <div class="col-md-6">
-      <a href="./?method=upload" class="secondary-cta pull-right">Switch to select a document from your computer</a>
+      <a href="#switchdoc" data-toggle="modal" class="secondary-cta pull-right">Switch to select a document from your computer</a>
     </div>
   </div>
-  <textarea id="reference" class="form-control"></textarea>
+  <textarea id="reference_write" class="form-control" name="reference_write">Blah bla balh</textarea>
   <script type="text/javascript">
     $(document).ready(function() {
       tinymce.init({
-        selector:'#reference',
+        selector:'#reference_write',
         toolbar: 'undo redo | bold italic | bullist numlist ',
         statusbar: false,
         height: '300px',
         menubar: false,
         plugins: 'paste',
         valid_elements: 'strong/b,em/i,u,ol,ul,li,p',
+        setup: function(editor) {
+          editor.on('change', function(e) {
+            $('form').toggleClass('dirty', true);
+          });
+        }
       });
     });
   </script>
   {% elseif method=='upload' %}
-  <div class="row">
+  <div class="row" id="reference">
     <div class="col-md-6">
       <h3>Select a document from your computer</h3>
     </div>
     <div class="col-md-6">
-      <a href="./?method=write" class="secondary-cta pull-right">Switch to write reference online or copy from document</a>
+      <a href="#switchtext" data-toggle="modal" class="secondary-cta pull-right">Switch to write reference online or copy from document</a>
     </div>
   </div>
   <div class="well">
@@ -110,16 +121,23 @@
   <p>Please confirm the following statement:</p>
   <div class="checkbox">
     <label>
-      <input type="checkbox"><strong>
-      I understand that the University will treat the reference in strict confidence insofar as the law permits, but may be required by law to disclose it to the applicant under the Data Protection Act (1988)</strong>
+      <input type="checkbox" name="dpayes"><strong>I understand that the University will treat the reference in strict confidence insofar as the law permits, but may be required by law to disclose it to the applicant under the Data Protection Act (1988)</strong>
     </label>
   </div>
   <fieldset class="form-group">
     <label for="dpa">If there are any factors that you think should be taken into account if the applicant makes a request to view this reference, please give them here:</label>
-    <textarea class="form-control" rows="5" style="resize:none;"></textarea>
+    <textarea class="form-control" rows="5" style="resize:none;" name="dpatext"></textarea>
   </fieldset>
 </div>
-
+</form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('form').areYouSure();
+});
+</script>
 {{ saveandnext('../review') }}
+
+{{ modal('Switch to document?', 'switchdoc', 'If you wish to select a document instead, any text you have given already will be discarded.', './?method=upload#reference', 'Discard text and switch to document', 'Cancel') }}
+{{ modal('Switch to write online?', 'switchtext', 'If you wish to write the reference online, or copy it from a document, any document you have already selected will be discarded.', './?method=write#reference', 'Discard document and switch to write online', 'Cancel') }}
 
 {% endblock %}

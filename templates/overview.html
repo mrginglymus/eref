@@ -4,9 +4,10 @@
 {% include 'progress.html' %}
 {% endblock %}
 
-{% from 'macros.html' import text_input, saveandnext %}
+{% from 'macros.html' import text_input, saveandnext, select_input %}
 
 {% block content %}
+<form action="/" method="GET">
 <div class="row">
   <div class="col-md-6 p-x p-t">
     <h2>Applicant Details</h2>
@@ -30,10 +31,7 @@
       </tbody>
     </table>
     <h2>Your Details</h2>
-    <fieldset class="form-group">
-      <label for="title">Title:</label>
-      <select class="form-control c-select"><option>Professor</option><option>Herr doktor doktor</option></select>
-    </fieldset>
+    {{ select_input('Title', 'title', ['Professor', 'Herr doktor doktor']) }}
     {{ text_input('First name', 'firstname') }}
     {{ text_input('Last name', 'lastname') }}
     {{ text_input('Telephone', 'telephone') }}
@@ -50,5 +48,11 @@
     {{ text_input('Known applicant for', 'knownfor', 'Please provide an estimate of the time period you knew the applicant (e.g. October 2013 to July 2014, September 2015 to present)') }}
   </div>
 </div>
+</form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('form').areYouSure();
+});
+</script>
 {{ saveandnext('../reference') }}
 {% endblock %}
