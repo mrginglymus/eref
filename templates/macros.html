@@ -1,0 +1,32 @@
+{% macro text_input(label, id, help_text=false) %}
+<fieldset class="form-group">
+  <label for="{{ id }}">{{ label }}:</label>
+  <input type="text" class="form-control">
+  {% if help_text %}<span class="text-muted">{{ help_text }}</span>{% endif %}
+</fieldset>
+{% endmacro %}
+
+{% macro saveandnext(next) %}
+<div class="row">
+  <div class="col-md-12">
+    <hr>
+    <div class="p-x p-b clearfix">
+      <a href="{{ next }}?save" class="btn btn-primary btn-cta pull-right">Save and Next</a>
+      <a href=".?save" class="btn btn-secondary pull-right" style="margin-right: 10px;">Save</a>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro select_input(label, id, options, help_text=false) %}
+<fieldset class="form-group">
+  {% if label %}
+  <label for="{{ id }}">{{ label }}:</label>
+  {% endif %}
+  <select class="form-control c-select">
+  {% for option in options %}
+    <option>{{ option }}</option>
+  {% endfor %}
+  </select>
+</fieldset>
+{% endmacro %}

@@ -1,0 +1,54 @@
+{% extends 'app.html' %}
+
+{% block progress %}
+{% include 'progress.html' %}
+{% endblock %}
+
+{% from 'macros.html' import text_input, saveandnext %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6 p-x p-t">
+    <h2>Applicant Details</h2>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>Email</th>
+          <td><a href="mailto:fred@blogs.com">fred@blogs.com</a></td>
+        </tr>
+        <tr>
+          <th>Application Number</th>
+          <td>12345678</td>
+        </tr>
+        <tr>
+          <th>Application Date</th>
+          <td>18 August 2015</td>
+        </tr>
+        <tr>
+          <th>Course</th>
+          <td>MPhil in Development Studies<br><a href="/" class="secondary-cta">Prospectus link</a></td>
+      </tbody>
+    </table>
+    <h2>Your Details</h2>
+    <fieldset class="form-group">
+      <label for="title">Title:</label>
+      <select class="form-control c-select"><option>Professor</option><option>Herr doktor doktor</option></select>
+    </fieldset>
+    {{ text_input('First name', 'firstname') }}
+    {{ text_input('Last name', 'lastname') }}
+    {{ text_input('Telephone', 'telephone') }}
+  </div>
+  <div class="col-md-6 p-x p-t">
+    <h2>How you know the applicant</h2>
+    <p>Please give details of your job at the time you knew the applicant.</p>
+    {{ text_input('Institution/Organisation', 'institution') }}
+    {{ text_input('City', 'city') }}
+    {{ text_input('Country', 'country') }}
+    {{ text_input('Department', 'department') }}
+    {{ text_input('Job Title', 'jobtitle') }}
+    {{ text_input('Relationship with applicant', 'relationship', 'e.g. Supervisor, Line Manager, Tutor') }}
+    {{ text_input('Known applicant for', 'knownfor', 'Please provide an estimate of the time period you knew the applicant (e.g. October 2013 to July 2014, September 2015 to present)') }}
+  </div>
+</div>
+{{ saveandnext('../reference') }}
+{% endblock %}

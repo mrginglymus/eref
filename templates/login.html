@@ -1,0 +1,19 @@
+{% extends 'app.html' %}
+
+{% block content %}
+<div class="p-a">
+  <div class="well" style="width:100%";>
+    <form class="form-inline" id="login">
+      <div class="form-group" style="margin-bottom: 10px;">
+        <label for="pin" class="lead">PIN:</label>
+        <input type="password" class="form-control" name="pin" id="pin" style="width:7em; line-height:3em; margin-left: 10px">
+        <button type="submit" class="btn btn-primary btn-cta" style="width:7em; line-height:3em; margin-left:20px;">Login</button>
+        </form>
+      </div>
+      <span>Your PIN was included in the same email as the link that you followed.</span>
+    </form>
+  </div>
+  <p>You can return as many times as needed until your reference is submitted.</p>
+  <p>If you have problems getting access, please contact <a href="mailto:graduate.references@admin.cam.ac.uk">graduate.references@admin.cam.ac.uk</a>.
+</div>
+{% endblock %}

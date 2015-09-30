@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+    <title>{{ page_title }}</title>
+ 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <!--[if gte IE 10]><!--><link rel="stylesheet" href="http://spork.internal.admin.cam.ac.uk/demo/campl-ng/css/campl.css"><!--<![endif]-->
+    <!--[if lte IE 9 ]>
+      <link rel="stylesheet" href="http://spork.internal.admin.cam.ac.uk/demo/campl-ng/css/campl_legacy.css">
+    <![endif]-->
+    <script type="text/javascript" src="http://spork.internal.admin.cam.ac.uk/demo/campl-ng/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="http://spork.internal.admin.cam.ac.uk/demo/campl-ng/js/moment.js"></script>
+    <script type="text/javascript" src="http://spork.internal.admin.cam.ac.uk/demo/campl-ng/js/en-gb.js"></script>
+    <script type="text/javascript" src="http://spork.internal.admin.cam.ac.uk/demo/campl-ng/js/js.cookie.js"></script>
+    <script type="text/javascript" src="http://spork.internal.admin.cam.ac.uk/demo/campl-ng/js/bootstrap.js"></script>
+    <script type="text/javascript" src="http://spork.internal.admin.cam.ac.uk/demo/campl-ng/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="http://spork.internal.admin.cam.ac.uk/demo/campl-ng/js/menu.js"></script>
+    <script type="text/javascript" src="http://spork.internal.admin.cam.ac.uk/demo/campl-ng/js/select_tab.js"></script>
+    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+    <script type="text/javascript" src="//use.typekit.com/hyb5bko.js"></script>
+    <script type="text/javascript">
+      try {
+        Typekit.load();
+      } catch (e) {
+      }
+    </script>
+    <style type="text/css">
+      .well {
+        border: 1px solid #e3e3e3;
+        background-color: #f5f5f5;
+        margin-bottom: 20px;
+        padding: 20px;
+      }
+      .subtitle h1{
+        font-size: 26px;
+        line-height: 29px;
+        margin-bottom: 0;
+      }
+      body {
+        font-size: 14px;
+      }
+      ul {
+        max-width: 600px;
+      }
+      li {
+        padding-bottom: 1em;
+      }
+      label {
+        font-weight: bold;
+      }
+      .form-control {
+        line-height: 2;
+      }
+      @media (max-width: 480px) {
+        #login input, #login button {
+          margin-left: 0 !important;
+          width: 100% !important;
+          margin-bottom: 5px;
+        }
+      }
+    </style>
+  </head>
+  <body class="offcanvas offcanvas-left theme-blue">
+  {% block body %}
+  Hello, world
+  {% endblock %}
+  </body>
+</html>
