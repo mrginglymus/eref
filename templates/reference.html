@@ -7,7 +7,7 @@
 {% from 'macros.html' import text_input, saveandnext, select_input, modal %}
 
 {% block content %}
-<form>
+<form class="checkme">
 <div class="p-a">
   <h2>Ranking</h2>
   <div class="row">
@@ -33,9 +33,9 @@
     <div class="col-md-6">
       <h3>Personal Ranking</h3>
       <p>Please give your personal assessment of the applicant's suitability for the course</p>
-      {{ select_input(false, ranking, ['---Select Ranking---', 'Top 1% - Exceptional', 'Top 5% - Outstanding', 'Top 10% - Very Good', 'Top 25% - Good', 'Top 50% - Above Average', 'Bottom 50% - Below Average']) }}
+      {{ select_input(false, 'ranking', ['---Select Ranking---', 'Top 1% - Exceptional', 'Top 5% - Outstanding', 'Top 10% - Very Good', 'Top 25% - Good', 'Top 50% - Above Average', 'Bottom 50% - Below Average']) }}
       <p>This ranking is based on:</p>
-      {{ select_input(false, ranking_reason, ['---Select basis---', 'All students I have ever taught', 'Students on a particular course/in a particular class', 'Students in the year group', 'A team of people (e.g. staff or volunteers in an organisation)', 'A group not listed above (please give details in the reference)']) }}
+      {{ select_input(false, 'ranking_reason', ['---Select basis---', 'All students I have ever taught', 'Students on a particular course/in a particular class', 'Students in the year group', 'A team of people (e.g. staff or volunteers in an organisation)', 'A group not listed above (please give details in the reference)']) }}
       <div class="checkbox">
         <label>
           <input type="checkbox" name="perno">
@@ -45,7 +45,7 @@
     </div>
   </div>
   <hr>
-  <h2>Reference</h2>
+  <h2 id="reference">Reference</h2>
   <p>In your reference please comment on:</p>
   <ul style="margin-left: 20px">
     <li>The applicant’s academic fitness and general suitability to undertake the proposed course of research or study, in relation to the qualification sought;</li>
@@ -76,7 +76,7 @@
     </div>
   </div>
   {% elseif method=='write' %}
-  <div class="row" id="reference">
+  <div class="row">
     <div class="col-md-6">
       <h3>Write reference online or copy from document</h3>
     </div>
@@ -84,7 +84,7 @@
       <a href="#switchdoc" data-toggle="modal" class="secondary-cta pull-right">Switch to select a document from your computer</a>
     </div>
   </div>
-  <textarea id="reference_write" class="form-control" name="reference_write">Blah bla balh</textarea>
+  <textarea id="reference_write" class="form-control" name="reference_write"><p>Blah bla balh</p></textarea>
   <script type="text/javascript">
     $(document).ready(function() {
       tinymce.init({
@@ -96,15 +96,15 @@
         plugins: 'paste',
         valid_elements: 'strong/b,em/i,u,ol,ul,li,p',
         setup: function(editor) {
-          editor.on('change', function(e) {
-            $('form').toggleClass('dirty', true);
+          editor.on('keyup', function(e) {
+            $('form').toggleClass('dirty', editor.targetElm.value!=editor.getContent());
           });
         }
       });
     });
   </script>
   {% elseif method=='upload' %}
-  <div class="row" id="reference">
+  <div class="row">
     <div class="col-md-6">
       <h3>Select a document from your computer</h3>
     </div>
@@ -130,14 +130,25 @@
   </fieldset>
 </div>
 </form>
-<script type="text/javascript">
-$(document).ready(function() {
-  $('form').areYouSure();
-});
-</script>
 {{ saveandnext('../review') }}
 
 {{ modal('Switch to document?', 'switchdoc', 'If you wish to select a document instead, any text you have given already will be discarded.', './?method=upload#reference', 'Discard text and switch to document', 'Cancel') }}
 {{ modal('Switch to write online?', 'switchtext', 'If you wish to write the reference online, or copy it from a document, any document you have already selected will be discarded.', './?method=write#reference', 'Discard document and switch to write online', 'Cancel') }}
 
+<script type="text/javascript">
+  $(document).on('ready', function() {
+    $('input[name="arno"]').on('change', function() {
+      $('[name="arposition"], [name="arsize"]').attr('disabled', $(this).is(':checked'))
+      if ($(this).is(':checked')) {
+        $('[name="arposition"], [name="arsize"]').val('');
+      }
+    });
+    $('input[name="perno"]').on('change', function() {
+      $('[name="ranking"], [name="ranking_reason"]').attr('disabled', $(this).is(':checked'))
+      if ($(this).is(':checked')) {
+        $('[name="ranking"], [name="ranking_reason"]').each(function(i, e) {e.selectedIndex=0;});
+      }
+    });
+  });
+</script>
 {% endblock %}

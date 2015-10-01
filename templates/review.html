@@ -3,3 +3,42 @@
 {% block progress %}
 {% include 'progress.html' %}
 {% endblock %}
+
+{% block content %}
+<form>
+<div class="alert alert-info alert-top" role="alert">
+  <div class="row">
+    <div class="col-md-4">
+      <span class="fa fa-info-circle"></span>
+      <span>Not yet submitted:</span>
+    </div>
+    <div class="col-md-8">
+      Your reference has not been submitted. Please read the information below.
+    </div>
+  </div>
+</div>
+<div class="p-a">
+  <h2>Review Reference</h2>
+  <p>Please download and review the reference that will be submitted to ensure that it is accurate. You may wish to keep a copy of it for your records; this will be the last chance to do so.</p>
+  <a href="#"><span class="fa fa-3x fa-file-pdf-o" style="vertical-align:middle; margin-right:10px; margin-left:30px;"></span><span>Academic Reference for Miss Sarah Williams</span></a>
+  <div class="checkbox p-t">
+    <label>
+      <input type="checkbox" id="confirmdoc" name="confirmdoc">I confirm that the document above is an accurate representation of the reference I wish to submit.</strong>
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" id="confirmporky" name="confirmporky">I confirm that all the information I have provided is accurate, to the best of my knowledge, and I understand that the University of Cambridge may refuse admission to the applicant if it discovers that any information has been falsified or is inaccurate.
+    </label>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <hr>
+    <div class="p-x p-b clearfix">
+      <button type="submit" class="btn btn-primary btn-cta pull-right">Submit Reference</button>
+    </div>
+  </div>
+</div>
+</form>
+{% endblock %}
