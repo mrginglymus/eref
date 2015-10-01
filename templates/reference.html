@@ -10,6 +10,7 @@
 <form class="checkme">
 <div class="p-a">
   <h2>Ranking</h2>
+  {% if type=='academic' %}
   <div class="row">
     <div class="col-md-6">
       <h3>Academic Ranking</h3>
@@ -34,18 +35,39 @@
       <h3>Personal Ranking</h3>
       <p>Please give your personal assessment of the applicant's suitability for the course</p>
       {{ select_input(false, 'ranking', ['---Select Ranking---', 'Top 1% - Exceptional', 'Top 5% - Outstanding', 'Top 10% - Very Good', 'Top 25% - Good', 'Top 50% - Above Average', 'Bottom 50% - Below Average']) }}
-      <p>This ranking is based on:</p>
-      {{ select_input(false, 'ranking_reason', ['---Select basis---', 'All students I have ever taught', 'Students on a particular course/in a particular class', 'Students in the year group', 'A team of people (e.g. staff or volunteers in an organisation)', 'A group not listed above (please give details in the reference)']) }}
+      <p>On what overall group are you basing this ranking?</p>
+      {{ select_input(false, 'ranking_reason', ['---Select group---', 'All students I have ever taught', 'Students on a particular course/in a particular class', 'Students in the year group', 'A team of people (e.g. staff or volunteers in an organisation)', 'A group not listed above (please give details in the reference)']) }}
       <div class="checkbox">
         <label>
           <input type="checkbox" name="perno">
-          I am not able to provide an academic ranking (please give details in the reference)
+          I am not able to provide an personal ranking (please give details in the reference)
         </label>
       </div>
     </div>
   </div>
+  {% elseif type=='personal' %}
+  <div class="row">
+    <div class="col-xs-6">
+      <p>How highly would you rank the applicant for a Gates Cambridge Scholarship?</p>
+      {{ select_input(false, 'ranking', ['---Select Ranking---', 'Top 1% - Exceptional', 'Top 5% - Outstanding', 'Top 10% - Very Good', 'Top 25% - Good', 'Top 50% - Above Average', 'Bottom 50% - Below Average']) }}
+      <p>On what overall group are you basing this ranking?</p>
+      {{ select_input(false, 'ranking_reason', ['---Select group---', 'All students I have ever taught', 'Students on a particular course/in a particular class', 'Prestigious scholarship applicants of whom I have experience', 'A team of people (e.g. staff or volunteers in an organisation)', 'A group not listed above (please give details in the reference)']) }}
+      <p>Approximately how many people are in the overall group?</p>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Size" id="ranking_number" name="ranking_number">
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="perno">
+          I am not able to rank this applicant as there is no overall group to compare against (please give details in the reference below)
+        </label>
+      </div>
+    </div>
+  </div>
+  {% endif %}
   <hr>
   <h2 id="reference">Reference</h2>
+  {% if type=='academic' %}
   <p>In your reference please comment on:</p>
   <ul style="margin-left: 20px">
     <li>The applicant’s academic fitness and general suitability to undertake the proposed course of research or study, in relation to the qualification sought;</li>
@@ -55,6 +77,16 @@
     <li>A justification of any difference between the applicants academic ranking and your personal ranking;</li>
     <li>Any other information which you think is relevant to the application (e.g., research experience, ability to work independently, key strengths /weaknesses)</li>
   </ul>
+  {% elseif type=='personal' %}
+    <p>Please give your assessment of the applicant’s suitability a Gates Cambridge Scholarship, which are awarded on the following criteria:</p>
+    <ul style="margin-left: 20px;">
+      <li>Outstanding intellectual ability</li>
+      <li>Leadership potential</li>
+      <li>A commitment to improving the lives of others</li>
+      <li>A good fit with the postgraduate programme at Cambridge for which they are applying.</li>
+    </ul>
+    <p>Before writing this reference, referees are strongly advised to visit <a href="www.gatescambridge.org">www.gatescambridge.org</a> for full details about the Gates Cambridge programme and also <a href="www.gatescambridge.org/apply/how-apply/personal-reference">www.gatescambridge.org/apply/how-apply/personal-reference</a> for specific guidance on writing a personal reference for this programme.</p>
+  {% endif %}
   {% if not method %}
   <h2 style="text-align:center;">Please select how you would like to provide your reference</h2>
   <div class="row">
@@ -118,14 +150,14 @@
   {% endif %}
   <hr>
   <h2>Data Protection Act</h2>
-  <p>Please confirm the following statement:</p>
   <div class="checkbox">
     <label>
-      <input type="checkbox" name="dpayes"><strong>I understand that the University will treat the reference in strict confidence insofar as the law permits, but may be required by law to disclose it to the applicant under the Data Protection Act (1988)</strong>
+      <input type="checkbox" name="dpayes">
+        <strong>I understand that the University will treat the reference in strict confidence insofar as the law permits, but may be required by law to disclose it to the applicant under the Data Protection Act (1988)</strong>
     </label>
   </div>
   <fieldset class="form-group">
-    <label for="dpa">If there are any factors that you think should be taken into account if the applicant makes a request to view this reference, please give them here:</label>
+    <p>If there are any factors that you think should be taken into account if the applicant makes a request to view this reference, please give them here:</p>
     <textarea class="form-control" rows="5" style="resize:none;" name="dpatext"></textarea>
   </fieldset>
 </div>
@@ -144,9 +176,10 @@
       }
     });
     $('input[name="perno"]').on('change', function() {
-      $('[name="ranking"], [name="ranking_reason"]').attr('disabled', $(this).is(':checked'))
+      $('[name="ranking"], [name="ranking_reason"], [name="ranking_number"]').attr('disabled', $(this).is(':checked'))
       if ($(this).is(':checked')) {
         $('[name="ranking"], [name="ranking_reason"]').each(function(i, e) {e.selectedIndex=0;});
+        $('[name="ranking_number"]').val('');
       }
     });
   });
