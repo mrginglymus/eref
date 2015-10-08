@@ -1,7 +1,7 @@
-{% macro text_input(label, id, help_text=false) %}
+{% macro text_input(label, id, help_text=false, mandatory=true) %}
 <fieldset class="form-group">
-  <label for="{{ id }}">{{ label }}:</label>
-  <input type="text" class="form-control" id="{{ id }}" name="{{ id }}">
+  <label for="{{ id }}">{{ label }}{% if not mandatory %} (Optional){% endif %}:</label>
+  <input type="text" class="form-control" id="{{ id }}" name="{{ id }}"{% if mandatory %} data-mandatory{% endif %}>
   {% if help_text %}<span class="text-muted">{{ help_text }}</span>{% endif %}
 </fieldset>
 {% endmacro %}
@@ -18,12 +18,12 @@
 </div>
 {% endmacro %}
 
-{% macro select_input(label, id, options, help_text=false) %}
+{% macro select_input(label, id, options, help_text=false, mandatory=true) %}
 <fieldset class="form-group">
   {% if label %}
-  <label for="{{ id }}">{{ label }}:</label>
+  <label for="{{ id }}">{{ label }}{% if not mandatory %} (Optional){% endif %}:</label>
   {% endif %}
-  <select class="form-control c-select" id="{{ id }}" name="{{ id }}">
+  <select class="form-control c-select" id="{{ id }}" name="{{ id }}"{% if mandatory %} data-mandatory{% endif %}>
   {% for option in options %}
     <option>{{ option }}</option>
   {% endfor %}

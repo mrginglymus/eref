@@ -7,47 +7,81 @@
 {% from 'macros.html' import text_input, saveandnext, select_input %}
 
 {% block content %}
-<form class="checkme">
+
+
+<div class="row p-a m-t well">
+  <div class="col-sm-3">
+    <strong>Applicant name:</strong> Miss Sarah Williams
+  </div>
+  <div class="col-sm-3">
+    <strong>Email:</strong> <a href="mailto:fred@blogs.com">fred@blogs.com</a>
+  </div>
+  <div class="col-sm-3">
+    <strong>Application number</strong> 12345678
+  </div>
+  <div class="col-sm-3">
+    <strong>Application date</strong> 18 August 2015
+  </div>
+  <div class="col-sm-3 p-t">
+    <strong>Course</strong> MPhil in Development Studies<br><a href="/" class="secondary-cta">Prospectus link</a>
+  </div>
+</div>
+
+<div class="alert alert-info alert-top" role="alert">
+  <div class="row">
+    <div class="col-md-4">
+      <span class="fa fa-info-circle"></span>
+      <span>Required fields:</span>
+    </div>
+    <div class="col-md-8">
+
+    </div>
+  </div>
+</div>
+
 <div class="row">
-  <div class="col-md-6 p-x p-t">
-    <h2>Applicant Details</h2>
-    <table class="table">
-      <tbody>
-        <tr>
-          <th>Email</th>
-          <td><a href="mailto:fred@blogs.com">fred@blogs.com</a></td>
-        </tr>
-        <tr>
-          <th>Application Number</th>
-          <td>12345678</td>
-        </tr>
-        <tr>
-          <th>Application Date</th>
-          <td>18 August 2015</td>
-        </tr>
-        <tr>
-          <th>Course</th>
-          <td>MPhil in Development Studies<br><a href="/" class="secondary-cta">Prospectus link</a></td>
-      </tbody>
-    </table>
+  <div class="col-md-6 p-x">
     <h2>Your Details</h2>
-    {{ select_input('Title', 'title', ['Professor', 'Herr doktor doktor']) }}
+    {{ select_input('Title', 'title', ['', 'Professor', 'Herr doktor doktor']) }}
     {{ text_input('Forename(s)', 'firstname') }}
     {{ text_input('Surname(s)', 'lastname') }}
-    {{ text_input('Telephone', 'telephone') }}
+    {{ text_input('Telephone', 'telephone', false, false) }}
   </div>
-  <div class="col-md-6 p-x p-t">
+  <div class="col-md-6 p-x">
     <h2>How you know the applicant</h2>
     <p>Please give details of your job at the time you knew the applicant.</p>
+    {{ text_input('Job Title', 'jobtitle') }}
     {{ text_input('Institution/Organisation', 'institution') }}
+    {{ text_input('Department', 'department', false, false) }}
     {{ text_input('City', 'city') }}
     {{ text_input('Country', 'country') }}
-    {{ text_input('Department', 'department') }}
-    {{ text_input('Job Title', 'jobtitle') }}
     {{ text_input('Relationship with applicant', 'relationship', 'e.g. Supervisor, Line Manager, Tutor') }}
     {{ text_input('Known applicant for', 'knownfor', 'Please provide an estimate of the time period you knew the applicant (e.g. October 2013 to July 2014, September 2015 to present)') }}
   </div>
 </div>
-</form>
 {{ saveandnext('../reference') }}
+
+<script type="text/javascript">
+$(function()  {
+  mandatory = $('input, select').filter('[data-mandatory]');
+  var refresh = function() {
+    mandatory_done = mandatory.filter(function() {return $(this).val() != ""});
+    mandatory_not_done = mandatory.filter(function() {return $(this).val() === ""});
+    if (mandatory.length == mandatory_done.length) {
+      $('.alert-info .col-md-8').html('You have completed all required fields and will be able to submit when all other sections are complete.');
+    } else {
+      $('.alert-info .col-md-8').html('You have completed <strong>' + mandatory_done.length + '</strong> of <strong>' + mandatory.length + '</strong> required questions (marked in blue). You will be able to save but unable to submit until you have completed all mandatory fields');
+    }
+    mandatory_done.css('border-color', '');
+    mandatory_not_done.css('border-color', 'blue');
+  }
+  refresh();
+  mandatory.change(function() {
+    refresh();
+  });
+  mandatory.keyup(function() {
+    refresh();
+  });
+});
+</script>
 {% endblock %}
