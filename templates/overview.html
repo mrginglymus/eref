@@ -14,6 +14,10 @@
     <table class="table">
       <tbody>
         <tr>
+          <th>Name</th>
+          <td>Miss Sarah Williams</td>
+        </tr>
+        <tr>
           <th>Email</th>
           <td><a href="mailto:fred@blogs.com">fred@blogs.com</a></td>
         </tr>
@@ -39,11 +43,11 @@
   <div class="col-md-6 p-x p-t">
     <h2>How you know the applicant</h2>
     <p>Please give details of your job at the time you knew the applicant.</p>
+    {{ text_input('Job Title', 'jobtitle') }}
+    {{ text_input('Department', 'department') }}
     {{ text_input('Institution/Organisation', 'institution') }}
     {{ text_input('City', 'city') }}
     {{ text_input('Country', 'country') }}
-    {{ text_input('Department', 'department') }}
-    {{ text_input('Job Title', 'jobtitle') }}
     {{ text_input('Relationship with applicant', 'relationship', 'e.g. Supervisor, Line Manager, Tutor') }}
     {{ text_input('Known applicant for', 'knownfor', 'Please provide an estimate of the time period you knew the applicant (e.g. October 2013 to July 2014, September 2015 to present)') }}
   </div>

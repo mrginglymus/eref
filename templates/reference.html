@@ -12,7 +12,7 @@
   <h2>Ranking</h2>
   {% if type=='academic' %}
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 p-r">
       <h3>Academic Ranking</h3>
       <p> Please give the applicant's official class ranking, if available, or an estimate of their position within the entire yeargroup</p>
       <div class="form-inline">
@@ -24,6 +24,8 @@
           <input type="number" class="form-control" placeholder="Yeargroup size" id="arsize" name="arsize">
         </div>
       </div>
+      <p class="p-t">This ranking is based on:</p>
+      {{ select_input(false, 'basis', ['', 'Official Class Rank', 'Unoficial Class Rank', 'Other (please give details in the reference)']) }}
       <div class="checkbox p-t">
         <label>
           <input type="checkbox" name="arno">
@@ -31,18 +33,10 @@
         </label>
       </div>
     </div>
-    <div class="col-md-6">
-      <h3>Personal Ranking</h3>
+    <div class="col-md-6 p-l">
+      <h3>Suitability for the course</h3>
       <p>Please give your personal assessment of the applicant's suitability for the course</p>
-      {{ select_input(false, 'ranking', ['---Select Ranking---', 'Top 1% - Exceptional', 'Top 5% - Outstanding', 'Top 10% - Very Good', 'Top 25% - Good', 'Top 50% - Above Average', 'Bottom 50% - Below Average']) }}
-      <p>On what overall group are you basing this ranking?</p>
-      {{ select_input(false, 'ranking_reason', ['---Select group---', 'All students I have ever taught', 'Students on a particular course/in a particular class', 'Students in the year group', 'A team of people (e.g. staff or volunteers in an organisation)', 'A group not listed above (please give details in the reference)']) }}
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" name="perno">
-          I am not able to provide an personal ranking (please give details in the reference)
-        </label>
-      </div>
+      {{ select_input(false, 'ranking', ['', 'Exceptionally Suitable', 'Very Suitable', 'Moderately Suitable', 'Unsuitable']) }}
     </div>
   </div>
   {% elseif type=='personal' %}
@@ -70,11 +64,11 @@
   {% if type=='academic' %}
   <p>In your reference please comment on:</p>
   <ul style="margin-left: 20px">
-    <li>The applicant’s academic fitness and general suitability to undertake the proposed course of research or study, in relation to the qualification sought;</li>
-    <li>If the applicant’s native language is not English, their level of fluency and proficiency in English, particularly in the context of their academic work;</li>
-    <li>The applicant’s academic results to date;</li>
+    <li>The applicant’s academic results to date</li>
+    <li>The applicant’s academic fitness and general suitability to undertake the proposed course of research or study, in relation to the qualification sought</li>
+    <li>A justification of any difference between the applicants academic ranking and your estimate of their suitability for the course</li>
+    <li>If the applicant’s native language is not English, their level of fluency and proficiency in English, particularly in the context of their academic work</li>
     <li>If the applicant is intending to study part-time, their ability to manage different responsibilities simultaneously;</li>
-    <li>A justification of any difference between the applicants academic ranking and your personal ranking;</li>
     <li>Any other information which you think is relevant to the application (e.g., research experience, ability to work independently, key strengths /weaknesses)</li>
   </ul>
   {% elseif type=='personal' %}
@@ -170,9 +164,10 @@
 <script type="text/javascript">
   $(document).on('ready', function() {
     $('input[name="arno"]').on('change', function() {
-      $('[name="arposition"], [name="arsize"]').attr('disabled', $(this).is(':checked'))
+      $('[name="arposition"], [name="arsize"], [name="basis"]').attr('disabled', $(this).is(':checked'))
       if ($(this).is(':checked')) {
         $('[name="arposition"], [name="arsize"]').val('');
+        $('[name="basis"]').each(function(i, e) {e.selectedIndex=0;});
       }
     });
     $('input[name="perno"]').on('change', function() {
