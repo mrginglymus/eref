@@ -1,0 +1,180 @@
+{% from 'macros.html' import text_input, saveandnext, select_input, applicant_info, applicant_info2 %}
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+    <title>{{ page_title }}</title>
+ 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <!--[if gte IE 10]><!--><link rel="stylesheet" href="http://people.ds.cam.ac.uk/wac26/campl-ng/css/campl.css"><!--<![endif]-->
+    <!--[if lte IE 9 ]>
+      <link rel="stylesheet" href="http://people.ds.cam.ac.uk/wac26/campl-ng/css/campl_legacy.css">
+    <![endif]-->
+    <script type="text/javascript" src=https://code.jquery.com/jquery-1.11.3.min.js></script>
+    
+    <script type="text/javascript" src=https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js></script>
+    
+    <script type="text/javascript" src=https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/en-gb.js></script>
+    
+    <script type="text/javascript" src=https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.3/js.cookie.js></script>
+    
+    <script type="text/javascript" src=https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js></script>
+    
+    
+    <script type="text/javascript" src="http://people.ds.cam.ac.uk/wac26/campl-ng/js/bootstrap.js"></script>
+    
+    <script type="text/javascript" src="http://people.ds.cam.ac.uk/wac26/campl-ng/js/campl.js"></script>
+    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.AreYouSure/1.9.0/jquery.are-you-sure.js"></script>
+    <script type="text/javascript" src="//use.typekit.com/hyb5bko.js"></script>
+    <script type="text/javascript">
+      try {
+        Typekit.load();
+      } catch (e) {
+      }
+    </script>
+    <style type="text/css">
+      .well {
+        border: 1px solid #e3e3e3;
+        background-color: #f5f5f5;
+        margin-bottom: 20px;
+        padding: 10px;
+      }
+      .subtitle h1{
+        font-size: 26px;
+        line-height: 29px;
+        margin-bottom: 0;
+      }
+      body {
+        //font-size: 14px;
+      }
+      ul {
+        max-width: 600px;
+      }
+      li {
+        padding-bottom: 1em;
+      }
+      label {
+        font-weight: bold;
+      }
+      .form-control {
+        line-height: 2;
+      }
+      @media (max-width: 480px) {
+        #login input, #login button {
+          margin-left: 0 !important;
+          width: 100% !important;
+          margin-bottom: 5px;
+        }
+      }
+      #top-links a, #top-links a:hover, #top-links li {
+        color: #fff;
+      }
+      #top-links li {
+        padding-bottom: 0.5em!important;
+      }
+    </style>
+  </head>
+  <body class="theme-blue" style="position: relative;" data-target="#sidemenu" data-spy="scroll">
+    <header>
+      <div class="global-header">
+        <div class="container">
+          <div class="col-xs-12">
+            <a href="http://www.cam.ac.uk/" class="navbar-brand"><img class="logo logo-sm" alt="University of Cambridge" src="http://people.ds.cam.ac.uk/wac26/campl-ng/images/logo.png"></a>
+          </div>
+        </div>
+      </div>
+      <div class="local-header">
+        <div class="container p-a" style="position: relative;">
+          <ul class="list-unstyled" id="top-links" style="position: absolute; top:10px; right: 10px;">
+            <li>> <a href="../login/">Log out</a></li>
+            <li>> <a href="../login/">Help and Guidance</a></li>
+          </ul>
+          <p class="title">
+            Referee Portal
+           </p>
+        </div>
+      </div>
+      <div class="local-header subtitle">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="p-a">
+                <h1 class="app">{{ subtitle }}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="container">
+      <div class="row">
+        <div class=col-md-3">
+          
+          <nav id="sidemenu">
+            <ul class="nav nav-pills nav-stacked">
+              <li class="nav-item">
+                <a class="nav-link active" href="#applicant_details">Applicant Details</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#referee_details">Referee Details</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#how_you_know">How you know</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="col-md-9 p-a">
+          <h2 id="applicant_details">Applicant Details</h2>
+          {{ applicant_info2('Applicant name', 'Miss Sarah Williams<br><a href="mailto:fred@blogs.com">fred@blogs.com</a>') }}
+          {{ applicant_info2('Application number', '12345678') }}
+          {{ applicant_info2('Application date', '18 August 2015') }}
+          {{ applicant_info2('Course', 'MPhil in Development Studies<br><a href="/" class="secondary-cta">Prospectus link</a>') }}
+          <h2 id="referee_details">Your Details</h2>
+           {{ select_input('Title', 'title', ['', 'Professor', 'Herr doktor doktor']) }}
+          {{ text_input('Forename(s)', 'firstname', 'Clever') }}
+          {{ text_input('Surname(s)', 'lastname', 'Cloggs') }}
+          {{ text_input('Telephone', 'telephone', '', false, false) }}
+          <h2 id="how_you_know">How you know the applicant</h2>
+          <p>Please give details of your job at the time you knew the applicant.</p>
+          {{ text_input('Job Title', 'jobtitle') }}
+          {{ text_input('Department', 'department', '', false, false) }}
+          {{ text_input('Institution/Organisation', 'institution') }}
+          {{ text_input('City', 'city', 'London') }}
+          {{ text_input('Country', 'country', 'United Kingdom') }}
+          {{ text_input('Relationship with applicant', '', 'relationship', 'e.g. Supervisor, Line Manager, Tutor') }}
+          {{ text_input('Known applicant for', 'knownfor', 'Oct 2013 to Nov 2013', 'Please provide an estimate of the time period you knew the applicant (e.g. October 2013 to July 2014, September 2015 to present)') }}
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="local-footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-5">
+              <p>This application is provided and managed by the <a href="http://www.admin.cam.ac.uk">Unified Administrative Service</a>.</p>
+              <p>&copy; 2015 University of Cambridge</p>
+            </div>
+            <div class="col-md-4">
+              <p class="text-muted">Version 0.4.0-SNAPSHOT (20150924-1109)</p>
+              <p class="bg-danger">This is a DEVELOPMENT version of the system</p>
+            </div>
+            <div class="col-md-3">
+              <h3><a href="/">Privacy and Cookie Policy</a></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  
+  
+  
+  
+  </body>
+</html>
