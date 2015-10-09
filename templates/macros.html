@@ -1,6 +1,11 @@
+{% macro field_label(label, id, mandatory) %}
+  <label for="{{ id }}">{% if mandatory %}<span class="fa fa-fw fa-circle-o"></span>{% else %}<span class="fa fa-fw"></span>{% endif %}{{ label }}{% if not mandatory %} <small>(Optional)</small>{% endif %}:</label>
+{% endmacro %}
+
 {% macro text_input(label, id, help_text=false, mandatory=true) %}
+{% from _self import field_label %}
 <fieldset class="form-group">
-  <label for="{{ id }}">{{ label }}{% if not mandatory %} (Optional){% endif %}:</label>
+  {{ field_label(label, id, mandatory) }}
   <input type="text" class="form-control" id="{{ id }}" name="{{ id }}"{% if mandatory %} data-mandatory{% endif %}>
   {% if help_text %}<span class="text-muted">{{ help_text }}</span>{% endif %}
 </fieldset>
@@ -19,9 +24,10 @@
 {% endmacro %}
 
 {% macro select_input(label, id, options, help_text=false, mandatory=true) %}
+{% from _self import field_label %}
 <fieldset class="form-group">
   {% if label %}
-  <label for="{{ id }}">{{ label }}{% if not mandatory %} (Optional){% endif %}:</label>
+    {{ field_label(label, id, mandatory) }}
   {% endif %}
   <select class="form-control c-select" id="{{ id }}" name="{{ id }}"{% if mandatory %} data-mandatory{% endif %}>
   {% for option in options %}
@@ -49,6 +55,19 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ cancel_text }}</button>
         <a href="{{ ok_link }}" class="btn btn-primary btn-cta">{{ ok_text }}</a>
       </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro applicant_info(field, value) %}
+<div class="col-sm-3">
+  <div class="row">
+    <div class="col-xs-5">
+      <strong>{{ field }}:</strong>
+    </div>
+    <div class="col-xs-7">
+      {{ value|raw }}
     </div>
   </div>
 </div>

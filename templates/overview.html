@@ -4,33 +4,22 @@
 {% include 'progress.html' %}
 {% endblock %}
 
-{% from 'macros.html' import text_input, saveandnext, select_input %}
+{% from 'macros.html' import text_input, saveandnext, select_input, applicant_info %}
 
 {% block content %}
 
 
 <div class="row p-a m-t well">
-  <div class="col-sm-3">
-    <strong>Applicant name:</strong> Miss Sarah Williams
-  </div>
-  <div class="col-sm-3">
-    <strong>Email:</strong> <a href="mailto:fred@blogs.com">fred@blogs.com</a>
-  </div>
-  <div class="col-sm-3">
-    <strong>Application number</strong> 12345678
-  </div>
-  <div class="col-sm-3">
-    <strong>Application date</strong> 18 August 2015
-  </div>
-  <div class="col-sm-3 p-t">
-    <strong>Course</strong> MPhil in Development Studies<br><a href="/" class="secondary-cta">Prospectus link</a>
-  </div>
+  {{ applicant_info('Applicant name', 'Miss Sarah Williams<br><a href="mailto:fred@blogs.com">fred@blogs.com</a>') }}
+  {{ applicant_info('Application number', '12345678') }}
+  {{ applicant_info('Application date', '18 August 2015') }}
+  {{ applicant_info('Course', 'MPhil in Development Studies<br><a href="/" class="secondary-cta">Prospectus link</a>') }}
 </div>
 
 <div class="alert alert-info alert-top" role="alert">
   <div class="row">
     <div class="col-md-4">
-      <span class="fa fa-info-circle"></span>
+      <span class="fa fa-circle-o"></span>
       <span>Required fields:</span>
     </div>
     <div class="col-md-8">
@@ -68,12 +57,12 @@ $(function()  {
     mandatory_done = mandatory.filter(function() {return $(this).val() != ""});
     mandatory_not_done = mandatory.filter(function() {return $(this).val() === ""});
     if (mandatory.length == mandatory_done.length) {
-      $('.alert-info .col-md-8').html('You have completed all required fields and will be able to submit when all other sections are complete.');
+      $('.alert-info .col-md-8').html('You have completed all required fields and will be able to submit when all other pages are complete.').prev().children('.fa').removeClass('fa-circle-o').addClass('fa-check-circle-o');
     } else {
-      $('.alert-info .col-md-8').html('You have completed <strong>' + mandatory_done.length + '</strong> of <strong>' + mandatory.length + '</strong> required questions (marked in blue). You will be able to save but unable to submit until you have completed all mandatory fields');
+      $('.alert-info .col-md-8').html('You have completed <strong>' + mandatory_done.length + '</strong> of <strong>' + mandatory.length + '</strong> required questions (marked with a blue circle). You will be able to save but unable to submit the reference until you have completed all mandatory fields on this and other pages').prev().children('.fa').removeClass('fa-check-circle-o').addClass('fa-circle-o');
     }
-    mandatory_done.css('border-color', '');
-    mandatory_not_done.css('border-color', 'blue');
+    mandatory_done.prev().children('span.fa').removeClass('fa-circle-o').addClass('fa-check-circle-o');
+    mandatory_not_done.prev().children('span.fa').css('color', '#0072cf').removeClass('fa-check-circle-o').addClass('fa-circle-o');
   }
   refresh();
   mandatory.change(function() {
