@@ -3,18 +3,18 @@
 {% block body %}
 <header>
   <div class="global-header">
-    <div class="container p-a">
-     <img class="logo logo-sm" alt="University of Cambridge" src="http://people.ds.cam.ac.uk/wac26/campl-ng/images/logo.png" style="padding-right: 20px;">
+    <div class="container">
+      <div class="col-xs-12">
+        <a href="http://www.cam.ac.uk/" class="navbar-brand"><img class="logo logo-sm" alt="University of Cambridge" src="http://people.ds.cam.ac.uk/wac26/campl-ng/images/logo.png"></a>
+      </div>
     </div>
   </div>
   <div class="local-header">
-    <div class="container p-a">
-      <div class="pull-right">
-        <ul class="list-unstyled" id="top-links">
-          <li>> <a href="../login/">Log out</a></li>
-          <li>> <a href="../login/">Help and Guidance</a></li>
-        </ul>
-      </div>
+    <div class="container p-a" style="position: relative;">
+      <ul class="list-unstyled" id="top-links" style="position: absolute; top:10px; right: 10px;">
+        <li>> <a href="../login/">Log out</a></li>
+        <li>> <a href="../login/">Help and Guidance</a></li>
+      </ul>
       <p class="title">
         Referee Portal
        </p>
@@ -22,9 +22,11 @@
   </div>
   <div class="local-header subtitle">
     <div class="container">
-      <div class="col-md-12">
-        <div class="p-a">
-          <h1>{{ subtitle }}</h1>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="p-a">
+            <h1 class="app">{{ subtitle }}</h1>
+          </div>
         </div>
       </div>
     </div>

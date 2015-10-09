@@ -1,12 +1,12 @@
 {% macro field_label(label, id, mandatory) %}
-  <label for="{{ id }}">{% if mandatory %}<span class="fa fa-fw fa-circle-o"></span>{% else %}<span class="fa fa-fw"></span>{% endif %}{{ label }}{% if not mandatory %} <small>(Optional)</small>{% endif %}:</label>
+  <label for="{{ id }}" class="form-control-label">{{ label }}:{% if not mandatory %} <small>(Optional)</small>{% endif %}</label>
 {% endmacro %}
 
-{% macro text_input(label, id, help_text=false, mandatory=true) %}
+{% macro text_input(label, id, value=false, help_text=false, mandatory=true) %}
 {% from _self import field_label %}
 <fieldset class="form-group">
   {{ field_label(label, id, mandatory) }}
-  <input type="text" class="form-control" id="{{ id }}" name="{{ id }}"{% if mandatory %} data-mandatory{% endif %}>
+  <input type="text" class="form-control" id="{{ id }}" name="{{ id }}"{% if mandatory %} data-mandatory{% endif %} value="{{ value }}">
   {% if help_text %}<span class="text-muted">{{ help_text }}</span>{% endif %}
 </fieldset>
 {% endmacro %}
@@ -16,6 +16,7 @@
   <div class="col-md-12">
     <hr>
     <div class="p-x p-b clearfix">
+      <a href="{{ prev }}" class="btn btn-default">&lt; Back</a>
       <a href="{{ next }}?save" class="btn btn-primary btn-cta pull-right">Save and Next</a>
       <a href=".?save" class="btn btn-secondary pull-right" style="margin-right: 10px;">Save</a>
     </div>
@@ -61,12 +62,17 @@
 {% endmacro %}
 
 {% macro applicant_info(field, value) %}
-<div class="col-sm-3">
+<th>{{ field }}:</th>
+<td>{{ value|raw }}</td>
+{% endmacro %}
+
+{% macro applicant_info2(field, value) %}
+<div class="col-md-3" style="width:auto!important; flex-grow:1; padding-bottom: 10px;">
   <div class="row">
-    <div class="col-xs-5">
-      <strong>{{ field }}:</strong>
+    <div style="padding-right:10px;">
+      <strong>{{field }}:</strong>
     </div>
-    <div class="col-xs-7">
+    <div style="padding-right:20px;">
       {{ value|raw }}
     </div>
   </div>
