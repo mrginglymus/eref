@@ -26,6 +26,8 @@
     <script type="text/javascript" src=https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js></script>
     
     
+    <script type="text/javascript" src="../js/stickyfill.js"></script>
+    
     <script type="text/javascript" src="http://people.ds.cam.ac.uk/wac26/campl-ng/js/bootstrap.js"></script>
     
     <script type="text/javascript" src="http://people.ds.cam.ac.uk/wac26/campl-ng/js/campl.js"></script>
@@ -78,10 +80,30 @@
       #top-links li {
         padding-bottom: 0.5em!important;
       }
+      
+      #sidemenu, .subtitle {
+        position: -webkit-sticky;
+        position: sticky;
+      }
+      
+      
+      #sidemenu {
+        top: 90px;
+      }
+      
+      .subtitle {
+        top: 0;
+        z-index: 5;
+      }
     </style>
+    <script type="text/javascript">
+    jQuery(function($) {
+      $('#sidemenu').Stickyfill();
+      $('.subtitle').Stickyfill();
+    }); 
+    </script>
   </head>
-  <body class="theme-blue" style="position: relative;" data-target="#sidemenu" data-spy="scroll">
-    <header>
+  <body class="theme-blue" style="position: relative;" data-target="#sidemenu" data-spy="scroll" data-offset="30">
       <div class="global-header">
         <div class="container">
           <div class="col-xs-12">
@@ -111,26 +133,24 @@
           </div>
         </div>
       </div>
-    </header>
     <main class="container">
       <div class="row">
-        <div class=col-md-3">
-          
+        <div class="col-md-3 p-a">
           <nav id="sidemenu">
             <ul class="nav nav-pills nav-stacked">
               <li class="nav-item">
-                <a class="nav-link active" href="#applicant_details">Applicant Details</a>
+                <a class="nav-link active" href="#applicant_details">Applicant details</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#referee_details">Referee Details</a>
+                <a class="nav-link" href="#referee_details">Your details</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#how_you_know">How you know</a>
+                <a class="nav-link" href="#how_you_know">How you know the applicant</a>
               </li>
             </ul>
           </nav>
         </div>
-        <div class="col-md-9 p-a">
+        <div class="col-md-6 p-a">
           <h2 id="applicant_details">Applicant Details</h2>
           {{ applicant_info2('Applicant name', 'Miss Sarah Williams<br><a href="mailto:fred@blogs.com">fred@blogs.com</a>') }}
           {{ applicant_info2('Application number', '12345678') }}
@@ -172,9 +192,5 @@
         </div>
       </div>
     </footer>
-  
-  
-  
-  
   </body>
 </html>
