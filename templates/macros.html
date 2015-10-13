@@ -1,24 +1,36 @@
 {% macro field_label(label, id, mandatory) %}
-  <label for="{{ id }}" class="form-control-label">{{ label }}:{% if not mandatory %} <small>(Optional)</small>{% endif %}</label>
+  <label for="{{ id }}" class="form-control-label col-sm-4" style="text-align:right;">{{ label }}:</label>
 {% endmacro %}
 
 {% macro text_input(label, id, value=false, help_text=false, mandatory=true) %}
 {% from _self import field_label %}
-<fieldset class="form-group">
+<div class="form-group row">
   {{ field_label(label, id, mandatory) }}
-  <input type="text" class="form-control" id="{{ id }}" name="{{ id }}"{% if mandatory %} data-mandatory{% endif %} value="{{ value }}">
-  {% if help_text %}<span class="text-muted">{{ help_text }}</span>{% endif %}
-</fieldset>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="{{ id }}" name="{{ id }}"{% if mandatory %} data-mandatory{% endif %} value="{{ value }}">
+    {% if help_text %}<span class="text-muted">{{ help_text }}</span>{% endif %}
+  </div>
+  <div class="col-sm-1 form-control-label">
+  {% if mandatory %}
+  {% if value %}
+    <span class="fa fa-fw fa-lg fa-check"></span>
+  {% else %}
+    <strong style="font-size: 1.5em;">*</strong>
+  {% endif %}
+  {% else %}
+    <small>Optional</small>
+  {% endif %}
+  </div>
+</div>
 {% endmacro %}
 
 {% macro saveandnext(next) %}
 <div class="row">
   <div class="col-md-12">
     <hr>
-    <div class="p-x p-b clearfix">
-      <a href="{{ prev }}" class="btn btn-default">&lt; Back</a>
-      <a href="{{ next }}?save" class="btn btn-primary btn-cta pull-right">Save and Next</a>
-      <a href=".?save" class="btn btn-secondary pull-right" style="margin-right: 10px;">Save</a>
+    <div class="p-x clearfix">
+      <a href=".?complete" class="btn btn-primary btn-cta pull-right">Save and Next</a>
+      <a href=".?complete" class="btn btn-secondary pull-right" style="margin-right: 10px;">Save</a>
     </div>
   </div>
 </div>
@@ -26,16 +38,29 @@
 
 {% macro select_input(label, id, options, help_text=false, mandatory=true) %}
 {% from _self import field_label %}
-<fieldset class="form-group">
+<div class="form-group row">
   {% if label %}
     {{ field_label(label, id, mandatory) }}
   {% endif %}
-  <select class="form-control c-select" id="{{ id }}" name="{{ id }}"{% if mandatory %} data-mandatory{% endif %}>
-  {% for option in options %}
-    <option>{{ option }}</option>
-  {% endfor %}
-  </select>
-</fieldset>
+  <div class="col-sm-7">
+    <select class="form-control c-select" id="{{ id }}" name="{{ id }}"{% if mandatory %} data-mandatory{% endif %}>
+    {% for option in options %}
+      <option>{{ option }}</option>
+    {% endfor %}
+    </select>
+  </div>
+  <div class="col-sm-1 form-control-label">
+  {% if mandatory %}
+  {% if value %}
+    <span class="fa fa-fw fa-lg fa-check"></span>
+  {% else %}
+    <strong style="font-size: 1.5em;">*</strong>
+  {% endif %}
+  {% else %}
+    <small>Optional</small>
+  {% endif %}
+  </div>
+</div>
 {% endmacro %}
 
 {% macro modal(title, id, body, ok_link, ok_text, cancel_text) %}

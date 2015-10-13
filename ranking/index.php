@@ -3,17 +3,8 @@
 
 require_once('../base.php');
 
-if (isset($_GET['method'])) {
-  $method = $_GET['method'];
-} else {
-  $method = false;
-}
 if (isset($_GET['save'])) {
   $save=true;
-}
-
-if (isset($_GET['complete'])) {
-  $complete=true;
 }
 
 if (isset($_GET['type'])) {
@@ -24,13 +15,11 @@ if (isset($_GET['type'])) {
 
 $subtitle = ucwords($type) . ' Reference for Miss Sarah Williams';
 
-echo $twig->render('reference.html', array(
+echo $twig->render('ranking.html', array(
   'subtitle'=>$subtitle,
-  'current'=>'reference',
-  'method'=>$method,
+  'current'=>'ranking',
   'save'=>$save,
   'type'=>$type,
-  'complete'=>$complete
 ));
 ?>
 

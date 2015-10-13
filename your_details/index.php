@@ -15,9 +15,9 @@ if (isset($_GET['missing_fields'])) {
   $missing_fields=true;
 }
 
-echo $twig->render('overview.html', array(
+echo $twig->render('your_details.html', array(
   'subtitle'=>'Academic Reference for Miss Sarah Williams',
-  'current'=>'overview',
+  'current'=>'your_details',
   'save'=>$save,
   'missing_fields'=>$missing_fields,
   'complete'=>$complete

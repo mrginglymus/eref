@@ -1,0 +1,37 @@
+{% extends 'app.html' %}
+
+{% block progress %}
+{% include 'progress.html' %}
+{% endblock %}
+
+{% from 'macros.html' import text_input, saveandnext, select_input, modal %}
+
+{% block content %}
+<h2>Ranking</h2>
+<h3>Academic Ranking</h3>
+<p> Please give the applicant's official class ranking, if available, or an estimate of their position within the entire yeargroup</p>
+<div class="form-inline">
+  <div class="form-group">
+    <input type="number" min="1" step="1" class="form-control" placeholder="Position" id="arposition" name="arposition">
+  </div>
+  <div class="form-group">
+    <label>out of</label>
+    <input type="number" min="1" step="1" class="form-control" placeholder="Yeargroup size" id="arsize" name="arsize">
+  </div>
+</div>
+<p class="p-t">This ranking is based on:</p>
+{{ select_input(false, 'basis', ['', 'Official Class Rank', 'Unoficial Class Rank', 'Other (please give details in the reference)']) }}
+<div class="checkbox">
+  <label>
+    <input type="checkbox" name="arno">
+    I am not able to provide an academic ranking (please give details in the reference)
+  </label>
+</div>
+<h3>Suitability for the course</h3>
+<p>Please give your personal assessment of the applicant's suitability for the course</p>
+{{ select_input(false, 'ranking', ['', 'Exceptionally Suitable', 'Very Suitable', 'Moderately Suitable', 'Unsuitable']) }}
+
+{{ saveandnext('../review') }}
+
+
+{% endblock %}

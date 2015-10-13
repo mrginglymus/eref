@@ -15,12 +15,12 @@ if (isset($_GET['missing_fields'])) {
   $missing_fields=true;
 }
 
-echo $twig->render('overview.html', array(
+echo $twig->render('how_you_know.html', array(
   'subtitle'=>'Academic Reference for Miss Sarah Williams',
-  'current'=>'overview',
+  'current'=>'how_you_know',
   'save'=>$save,
   'missing_fields'=>$missing_fields,
-  'complete'=>$complete
+  'complete'=>$complete,
 ));
 ?>
 

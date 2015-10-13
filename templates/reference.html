@@ -7,155 +7,91 @@
 {% from 'macros.html' import text_input, saveandnext, select_input, modal %}
 
 {% block content %}
-<form class="checkme">
-<div class="p-a">
-  <h2>Ranking</h2>
-  {% if type=='academic' %}
-  <div class="row">
-    <div class="col-md-6 p-r">
-      <h3>Academic Ranking</h3>
-      <p> Please give the applicant's official class ranking, if available, or an estimate of their position within the entire yeargroup</p>
-      <div class="form-inline">
-        <div class="form-group">
-          <input type="number" min="1" step="1" class="form-control" placeholder="Position" id="arposition" name="arposition">
-        </div>
-        <div class="form-group">
-          <label>out of</label>
-          <input type="number" min="1" step="1" class="form-control" placeholder="Yeargroup size" id="arsize" name="arsize">
-        </div>
+
+<h2 id="reference">Reference</h2>
+<p>In your reference please comment on:</p>
+<ul style="margin-left: 20px">
+  <li>The applicant’s academic results to date</li>
+  <li>The applicant’s academic fitness and general suitability to undertake the proposed course of research or study, in relation to the qualification sought</li>
+  <li>A justification of any difference between the applicants academic ranking and your estimate of their suitability for the course</li>
+  <li>If the applicant’s native language is not English, their level of fluency and proficiency in English, particularly in the context of their academic work</li>
+  <li>If the applicant is intending to study part-time, their ability to manage different responsibilities simultaneously;</li>
+  <li>Any other information which you think is relevant to the application (e.g., research experience, ability to work independently, key strengths /weaknesses)</li>
+</ul>
+ 
+{% if not method %}
+<h2 style="text-align:center;">Please select how you would like to provide your reference</h2>
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
+    <div class="row">
+      <div class="col-xs-6">
+        <a href="./?method=write#reference" style="display:block; width: 150px; margin: 0 auto; text-align:center; white-space:normal;" class="btn btn-secondary">
+          <span class="fa fa-pencil fa-4x"></span><br>
+          Write online or copy from document
+        </a>
       </div>
-      <p class="p-t">This ranking is based on:</p>
-      {{ select_input(false, 'basis', ['', 'Official Class Rank', 'Unoficial Class Rank', 'Other (please give details in the reference)']) }}
-      <div class="checkbox p-t">
-        <label>
-          <input type="checkbox" name="arno">
-          I am not able to provide an academic ranking (please give details in the reference)
-        </label>
-      </div>
-    </div>
-    <div class="col-md-6 p-l">
-      <h3>Suitability for the course</h3>
-      <p>Please give your personal assessment of the applicant's suitability for the course</p>
-      {{ select_input(false, 'ranking', ['', 'Exceptionally Suitable', 'Very Suitable', 'Moderately Suitable', 'Unsuitable']) }}
-    </div>
-  </div>
-  {% elseif type=='personal' %}
-  <div class="row">
-    <div class="col-xs-6">
-      <p>How highly would you rank the applicant for a Gates Cambridge Scholarship?</p>
-      {{ select_input(false, 'ranking', ['---Select Ranking---', 'Top 1% - Exceptional', 'Top 5% - Outstanding', 'Top 10% - Very Good', 'Top 25% - Good', 'Top 50% - Above Average', 'Bottom 50% - Below Average']) }}
-      <p>On what overall group are you basing this ranking?</p>
-      {{ select_input(false, 'ranking_reason', ['---Select group---', 'All students I have ever taught', 'Students on a particular course/in a particular class', 'Prestigious scholarship applicants of whom I have experience', 'A team of people (e.g. staff or volunteers in an organisation)', 'A group not listed above (please give details in the reference)']) }}
-      <p>Approximately how many people are in the overall group?</p>
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Size" id="ranking_number" name="ranking_number">
-      </div>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" name="perno">
-          I am not able to rank this applicant as there is no overall group to compare against (please give details in the reference below)
-        </label>
+      <div class="col-xs-6">
+        <a href="./?method=upload#reference" style="display:block; width: 150px; margin: 0 auto; text-align:center; white-space:normal;" class="btn btn-secondary">
+          <span class="fa fa-file-text-o fa-4x"></span><br>
+          Select a document from your computer
+        </a>
       </div>
     </div>
   </div>
-  {% endif %}
-  <hr>
-  <h2 id="reference">Reference</h2>
-  {% if type=='academic' %}
-  <p>In your reference please comment on:</p>
-  <ul style="margin-left: 20px">
-    <li>The applicant’s academic results to date</li>
-    <li>The applicant’s academic fitness and general suitability to undertake the proposed course of research or study, in relation to the qualification sought</li>
-    <li>A justification of any difference between the applicants academic ranking and your estimate of their suitability for the course</li>
-    <li>If the applicant’s native language is not English, their level of fluency and proficiency in English, particularly in the context of their academic work</li>
-    <li>If the applicant is intending to study part-time, their ability to manage different responsibilities simultaneously;</li>
-    <li>Any other information which you think is relevant to the application (e.g., research experience, ability to work independently, key strengths /weaknesses)</li>
-  </ul>
-  {% elseif type=='personal' %}
-    <p>Please give your assessment of the applicant’s suitability a Gates Cambridge Scholarship, which are awarded on the following criteria:</p>
-    <ul style="margin-left: 20px;">
-      <li>Outstanding intellectual ability</li>
-      <li>Leadership potential</li>
-      <li>A commitment to improving the lives of others</li>
-      <li>A good fit with the postgraduate programme at Cambridge for which they are applying.</li>
-    </ul>
-    <p>Before writing this reference, referees are strongly advised to visit <a href="www.gatescambridge.org">www.gatescambridge.org</a> for full details about the Gates Cambridge programme and also <a href="www.gatescambridge.org/apply/how-apply/personal-reference">www.gatescambridge.org/apply/how-apply/personal-reference</a> for specific guidance on writing a personal reference for this programme.</p>
-  {% endif %}
-  {% if not method %}
-  <h2 style="text-align:center;">Please select how you would like to provide your reference</h2>
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
-      <div class="row">
-        <div class="col-xs-6">
-          <a href="./?method=write#reference" style="display:block; width: 150px; margin: 0 auto; text-align:center; white-space:normal;" class="btn btn-secondary">
-            <span class="fa fa-pencil fa-4x"></span><br>
-            Write online or copy from document
-          </a>
-        </div>
-        <div class="col-xs-6">
-          <a href="./?method=upload#reference" style="display:block; width: 150px; margin: 0 auto; text-align:center; white-space:normal;" class="btn btn-secondary">
-            <span class="fa fa-file-text-o fa-4x"></span><br>
-            Select a document from your computer
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  {% elseif method=='write' %}
-  <div class="row">
-    <div class="col-md-6">
-      <h3>Write reference online or copy from document</h3>
-    </div>
-    <div class="col-md-6">
-      <a href="#switchdoc" data-toggle="modal" class="secondary-cta pull-right">Switch to select a document from your computer</a>
-    </div>
-  </div>
-  <textarea id="reference_write" class="form-control" name="reference_write"><p>Blah bla balh</p></textarea>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      tinymce.init({
-        selector:'#reference_write',
-        toolbar: 'undo redo | bold italic | bullist numlist ',
-        statusbar: false,
-        height: '300px',
-        menubar: false,
-        plugins: 'paste',
-        valid_elements: 'strong/b,em/i,u,ol,ul,li,p',
-        setup: function(editor) {
-          editor.on('keyup', function(e) {
-            $('form').toggleClass('dirty', editor.targetElm.value!=editor.getContent());
-          });
-        }
-      });
-    });
-  </script>
-  {% elseif method=='upload' %}
-  <div class="row">
-    <div class="col-md-6">
-      <h3>Select a document from your computer</h3>
-    </div>
-    <div class="col-md-6">
-      <a href="#switchtext" data-toggle="modal" class="secondary-cta pull-right">Switch to write reference online or copy from document</a>
-    </div>
-  </div>
-  <div class="well">
-    <input type="file" id="file" class="form-control-file">
-  </div>
-  {% endif %}
-  <hr>
-  <h2>Data Protection Act</h2>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox" name="dpayes">
-        <strong>I understand that the University will treat the reference in strict confidence insofar as the law permits, but may be required by law to disclose it to the applicant under the Data Protection Act (1988)</strong>
-    </label>
-  </div>
-  <fieldset class="form-group">
-    <p>If there are any factors that you think should be taken into account if the applicant makes a request to view this reference, please give them here:</p>
-    <textarea class="form-control" rows="5" style="resize:none;" name="dpatext"></textarea>
-  </fieldset>
 </div>
-</form>
+{% elseif method=='write' %}
+<div class="row">
+  <div class="col-md-6">
+    <h3>Write reference online or copy from document</h3>
+  </div>
+  <div class="col-md-6">
+    <a href="#switchdoc" data-toggle="modal" class="secondary-cta pull-right">Switch to select a document from your computer</a>
+  </div>
+</div>
+<textarea id="reference_write" class="form-control" name="reference_write"><p>Blah bla balh</p></textarea>
+<script type="text/javascript">
+  $(document).ready(function() {
+    tinymce.init({
+      selector:'#reference_write',
+      toolbar: 'undo redo | bold italic | bullist numlist ',
+      statusbar: false,
+      height: '300px',
+      menubar: false,
+      plugins: 'paste',
+      valid_elements: 'strong/b,em/i,u,ol,ul,li,p',
+      setup: function(editor) {
+        editor.on('keyup', function(e) {
+          $('form').toggleClass('dirty', editor.targetElm.value!=editor.getContent());
+        });
+      }
+    });
+  });
+</script>
+{% elseif method=='upload' %}
+<div class="row">
+  <div class="col-md-6">
+    <h3>Select a document from your computer</h3>
+  </div>
+  <div class="col-md-6">
+    <a href="#switchtext" data-toggle="modal" class="secondary-cta pull-right">Switch to write reference online or copy from document</a>
+  </div>
+</div>
+<div class="well">
+  <input type="file" id="file" class="form-control-file">
+</div>
+{% endif %}
+<hr>
+<h2>Data Protection Act</h2>
+<div class="checkbox">
+  <label>
+    <input type="checkbox" name="dpayes">
+      <strong>I understand that the University will treat the reference in strict confidence insofar as the law permits, but may be required by law to disclose it to the applicant under the Data Protection Act (1988)</strong>
+  </label>
+</div>
+<fieldset class="form-group">
+  <p>If there are any factors that you think should be taken into account if the applicant makes a request to view this reference, please give them here:</p>
+  <textarea class="form-control" rows="5" style="resize:none;" name="dpatext"></textarea>
+</fieldset>
 {{ saveandnext('../review') }}
 
 {{ modal('Switch to document?', 'switchdoc', 'If you wish to select a document instead, any text you have given already will be discarded.', './?method=upload#reference', 'Discard text and switch to document', 'Cancel') }}

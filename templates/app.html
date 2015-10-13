@@ -1,70 +1,91 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<header>
-  <div class="global-header">
-    <div class="container">
-      <div class="col-xs-12">
-        <a href="http://www.cam.ac.uk/" class="navbar-brand"><img class="logo logo-sm" alt="University of Cambridge" src="http://people.ds.cam.ac.uk/wac26/campl-ng/images/logo.png"></a>
-      </div>
+<div class="global-header">
+  <div class="container">
+    <div class="col-xs-12">
+      <a href="http://www.cam.ac.uk/" class="navbar-brand"><img class="logo logo-sm" alt="University of Cambridge" src="http://people.ds.cam.ac.uk/wac26/campl-ng/images/logo.png"></a>
     </div>
   </div>
-  <div class="local-header">
-    <div class="container p-a" style="position: relative;">
-      <ul class="list-unstyled" id="top-links" style="position: absolute; top:10px; right: 10px;">
-        <li>> <a href="../login/">Log out</a></li>
-        <li>> <a href="../login/">Help and Guidance</a></li>
-      </ul>
-      <p class="title">
-        Referee Portal
-       </p>
-    </div>
+</div>
+<div class="local-header">
+  <div class="container p-a">
+    <p class="title">
+      Referee Portal
+     </p>
   </div>
-  <div class="local-header subtitle">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="p-a">
-            <h1 class="app">{{ subtitle }}</h1>
-          </div>
+</div>
+<div class="local-header subtitle">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="p-a">
+          <h1 class="app">{{ subtitle }}</h1>
         </div>
       </div>
     </div>
   </div>
-</header>
+</div>
 <main class="container">
   <div class="row">
-    <div class="col-md-12">
-      {% block progress %}{% endblock %}
-      {% if error %}
-      <div class="alert alert-danger alert-top alert-dismissable" role="alert">
-        <div class="close pull-right" data-dismiss="alert">&times;</div>
-        <div class="row">
-          <div class="col-md-4">
-            <span class="fa fa-exclamation-triangle"></span>
-            <span>{{ error.title }}:</span>
-          </div>
-          <div class="col-md-8">
-            {{ error.message }}
-          </div>
-        </div>
-      </div>
-      {% endif %}
+    <div class="col-md-3 vertical-navigation" style="margin-top:0;">
+      <ul class="list-unstyled" id="vertical-navigation">
+        <li class="vertical-navigation-parent">
+          <a href="../overview/">Overview</a>
+          <ul class="list-unstyled">
+            <li class="nav-item {% if current=='your_details' %} active{% endif %}">
+              <a class="nav-link" href="../your_details/">1. Your details</a>
+            </li>
+            <li class="nav-item{% if current=='ranking' %} active{% endif %}">
+              <a class="nav-link" href="../ranking/">2. Applicant ranking</a>
+            </li>
+            <li class="nav-item{% if current=='reference' %} active{% endif %}">
+              <a class="nav-link" href="../reference/">3. Supply reference</a>
+            </li>
+            <li class="nav-item{% if current=='review' %} active{% endif %}">
+              <a class="nav-link" href="../review/">4. Review and submit</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="">Help and guidance</a>
+        </li>
+        <li>
+          <a href="">Log out</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-7">
       {% if save %}
-      <div class="alert alert-success alert-top alert-dismissable" role="alert">
-        <div class="close pull-right" data-dismiss="alert">&times;</div>
-        <div class="row">
-          <div class="col-md-4">
-            <span class="fa fa-check-circle"></span>
-            <span>Saved:</span>
-          </div>
-          <div class="col-md-8">
-            You have succesfully saved the information
+        <div class="alert alert-success alert-top alert-dismissable m-b-0" role="alert">
+          <div class="close pull-right" data-dismiss="alert">&nbsp;</div>
+          <div class="row">
+            <div class="col-md-4">
+              <span class="fa fa-check-circle"></span>
+              <span>Saved:</span>
+            </div>
+            <div class="col-md-8">
+              You have succesfully saved the information
+            </div>
           </div>
         </div>
-      </div>
       {% endif %}
+      {% if complete %}
+        <div class="alert alert-danger alert-top m-b-0" role="alert">
+          <div class="row">
+            <div class="col-md-4">
+              <span class="fa fa-exclamation-circle"></span>
+              <span>Missing fields:</span>
+            </div>
+            <div class="col-md-8">
+              Please complete the highlighted fields.
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      <div class="p-a">
       {% block content %}{% endblock %}
+      </div>
     </div>
   </div>
 </main>
@@ -92,4 +113,18 @@ $(document).ready(function() {
   $('form.checkme').areYouSure();
 });
 </script>
+{% if complete %}
+<script type="text/javascript">
+$(function()  {
+  mandatory = $('input, select').filter('[data-mandatory]');
+  var refresh = function() {
+    mandatory_done = mandatory.filter(function() {return $(this).val() != ""});
+    mandatory_not_done = mandatory.filter(function() {return $(this).val() === ""});
+        
+    mandatory_not_done.parents('.form-group').addClass('has-error');
+  }
+  refresh();
+});
+</script>
+{% endif %}
 {% endblock %}
