@@ -22,6 +22,10 @@
     
     <script type="text/javascript" src=https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js></script>
     
+    <script type="text/javascript" src=https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.4/hammer.js></script>
+    
+    <script type="text/javascript" src=https://cdn.jsdelivr.net/jquery.hammerjs/2.0.0/jquery.hammer.js></script>
+    
     <script type="text/javascript" src="../js/stickyfill.js"></script>
     
     <script type="text/javascript" src="http://people.ds.cam.ac.uk/wac26/campl-ng/js/bootstrap.js"></script>
@@ -73,35 +77,35 @@
       #top-links li {
         padding-bottom: 0.5em!important;
       }
-     #vertical-navigation, .subtitle {
+     #vertical-menu, .subtitle {
         position: -webkit-sticky;
         position: sticky;
       }
       
       
-      #vertical-navigation {
+      #vertical-menu {
         top: 70px;
       }
       
       
-      #vertical-navigation ul li a {
+      #vertical-menu ul li a {
         padding-left: 5px;
         border-left: 2px solid transparent;
         background: none;
       }
       
-      #vertical-navigation ul li span {
+      #vertical-menu ul li span {
         padding-left: 5px;
         border-left: 2px solid transparent;
         background: none;
       }
       
-      #vertical-navigation ul li a:hover,
-      #vertical-navigation ul li a:focus {
+      #vertical-menu ul li a:hover,
+      #vertical-menu ul li a:focus {
         text-decoration: none;
         border-left: 2px solid;
       }
-      #vertical-navigation ul li.active a {
+      #vertical-menu ul li.active a {
         border-left: 2px solid;
       }
       
@@ -110,13 +114,13 @@
         z-index: 5;
       }
       
-      #vertical-navigation {
+      #vertical-menu {
         z-index:4;
       }
     </style>
     <script type="text/javascript">
     jQuery(function($) {
-      $('#vertical-navigation').Stickyfill();
+      $('#vertical-menu').Stickyfill();
       $('.subtitle').Stickyfill();
     }); 
     </script>

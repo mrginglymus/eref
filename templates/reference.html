@@ -80,18 +80,6 @@
   <input type="file" id="file" class="form-control-file">
 </div>
 {% endif %}
-<hr>
-<h2>Data Protection Act</h2>
-<div class="checkbox">
-  <label>
-    <input type="checkbox" name="dpayes">
-      <strong>I understand that the University will treat the reference in strict confidence insofar as the law permits, but may be required by law to disclose it to the applicant under the Data Protection Act (1988)</strong>
-  </label>
-</div>
-<fieldset class="form-group">
-  <p>If there are any factors that you think should be taken into account if the applicant makes a request to view this reference, please give them here:</p>
-  <textarea class="form-control" rows="5" style="resize:none;" name="dpatext"></textarea>
-</fieldset>
 {{ saveandnext('../review') }}
 
 {{ modal('Switch to document?', 'switchdoc', 'If you wish to select a document instead, any text you have given already will be discarded.', './?method=upload#reference', 'Discard text and switch to document', 'Cancel') }}
